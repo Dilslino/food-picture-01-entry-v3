@@ -36,9 +36,9 @@ def main():
         )
 
     with open(source, "rb") as handle:
-        header = handle.read(8)
-    if header != b"\x89PNG\r\n\x1a\n":
-        fail("source image is not a PNG file: bad magic bytes")
+        header = handle.read(3)
+    if header != bytes([0xFF, 0xD8, 0xFF]):
+        fail("source image is not a JPEG file: bad magic bytes")
 
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
